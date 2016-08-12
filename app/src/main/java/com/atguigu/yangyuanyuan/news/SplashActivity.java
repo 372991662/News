@@ -1,6 +1,7 @@
 package com.atguigu.yangyuanyuan.news;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.AnimationSet;
@@ -49,7 +50,9 @@ public class SplashActivity extends Activity {
 
         @Override
         public void onAnimationEnd(android.view.animation.Animation animation) {
-
+            Intent intent = new Intent(SplashActivity.this, GuideActivity.class);
+            startActivity(intent);
+            finish();
         }
 
         @Override
