@@ -6,9 +6,11 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.atguigu.yangyuanyuan.news.R;
 import com.atguigu.yangyuanyuan.news.utils.DensityUtil;
@@ -53,6 +55,51 @@ public class GuideActivity extends Activity {
         }
 
         vp_guide.setAdapter(new ViewPagerAdapter());
+
+        //处理红点的移动
+        redPointMove();
+    }
+
+    //处理红点移动的方法
+    private void redPointMove() {
+        iv_guide_red.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                iv_guide_red.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+
+                //计算出每个红点的之间间距
+                final int everySpace = ll_guide_points.getChildAt(1).getLeft() - ll_guide_points.getChildAt(0).getLeft();
+
+                //得到屏幕滑动百分比
+                //viewPager的监听器
+                vp_guide.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+                    @Override
+                    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                        //两点之间移动到距离 = 屏幕的百分比*间距
+                        int moveDistance = (int) ((position * everySpace) + (positionOffset * everySpace));
+                        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) iv_guide_red.getLayoutParams();
+                        params.leftMargin = moveDistance;
+                        //设置到红点上
+                        iv_guide_red.setLayoutParams(params);
+
+                    }
+
+                    //界面选中回调的方法
+                    @Override
+                    public void onPageSelected(int position) {
+
+                    }
+
+
+                    @Override
+                    public void onPageScrollStateChanged(int state) {
+
+                    }
+                });
+            }
+        });
+
     }
 
     private void initView() {
