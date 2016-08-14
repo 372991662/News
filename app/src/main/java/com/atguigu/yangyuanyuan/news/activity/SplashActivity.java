@@ -58,7 +58,9 @@ public class SplashActivity extends Activity {
             boolean isAccessMain = CacheUtils.getBoolean(SplashActivity.this, START_MAIN);
             if (isAccessMain) {
                 //进入主页面
-
+                Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
             } else {
                 //引导页面
                 Intent intent = new Intent(SplashActivity.this, GuideActivity.class);

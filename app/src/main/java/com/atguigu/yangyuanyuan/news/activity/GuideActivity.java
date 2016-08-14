@@ -1,6 +1,7 @@
 package com.atguigu.yangyuanyuan.news.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -13,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.atguigu.yangyuanyuan.news.R;
+import com.atguigu.yangyuanyuan.news.utils.CacheUtils;
 import com.atguigu.yangyuanyuan.news.utils.DensityUtil;
 
 import java.util.ArrayList;
@@ -31,6 +33,23 @@ public class GuideActivity extends Activity {
 
         initView();
         initData();
+        initListener();
+    }
+
+    //设置按钮的点击事件
+    private void initListener() {
+        btn_guide_start.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //存到SP中
+                CacheUtils.putBoolean(GuideActivity.this, SplashActivity.START_MAIN, true);
+
+                //跳转到Main
+                Intent intent = new Intent(GuideActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     private void initData() {
@@ -65,6 +84,7 @@ public class GuideActivity extends Activity {
         iv_guide_red.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
+                //执行一次后移除监听
                 iv_guide_red.getViewTreeObserver().removeGlobalOnLayoutListener(this);
 
                 //计算出每个红点的之间间距
@@ -88,7 +108,11 @@ public class GuideActivity extends Activity {
                     //界面选中回调的方法
                     @Override
                     public void onPageSelected(int position) {
-
+                        if (position == (imageViews.size() - 1)) {
+                            btn_guide_start.setVisibility(View.VISIBLE);
+                        } else {
+                            btn_guide_start.setVisibility(View.INVISIBLE);
+                        }
                     }
 
 
