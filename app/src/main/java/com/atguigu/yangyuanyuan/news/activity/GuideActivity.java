@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.atguigu.yangyuanyuan.news.R;
+import com.atguigu.yangyuanyuan.news.utils.DensityUtil;
 
 import java.util.ArrayList;
 
@@ -19,7 +20,7 @@ public class GuideActivity extends Activity {
     private Button btn_guide_start;
     private LinearLayout ll_guide_points;
     private ArrayList<ImageView> imageViews;
-
+    private ImageView iv_guide_red;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,9 +43,9 @@ public class GuideActivity extends Activity {
             //创建点
             ImageView point = new ImageView(this);
             point.setBackgroundResource(R.drawable.point_normal);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(10, 10);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(DensityUtil.dip2px(this, 10), DensityUtil.dip2px(this, 10));
             if (i != 0) {
-                params.leftMargin = 10;
+                params.leftMargin = DensityUtil.dip2px(this, 10);
             }
             point.setLayoutParams(params);
 
@@ -58,6 +59,7 @@ public class GuideActivity extends Activity {
         vp_guide = (ViewPager) findViewById(R.id.vp_guide);
         btn_guide_start = (Button) findViewById(R.id.btn_guide_start);
         ll_guide_points = (LinearLayout) findViewById(R.id.ll_guide_points);
+        iv_guide_red = (ImageView) findViewById(R.id.iv_guide_red);
     }
 
     //ViewPagerAdapter
