@@ -25,9 +25,9 @@ public class MainActivity extends SlidingFragmentActivity {
         setBehindContentView(R.layout.activity_leftmenu);
 
         SlidingMenu sm = getSlidingMenu();
-        sm.setSecondaryMenu(R.layout.activity_rightmenu);
+        //sm.setSecondaryMenu(R.layout.activity_rightmenu);
         //设置显示模式
-        sm.setMode(SlidingMenu.LEFT_RIGHT);
+        sm.setMode(SlidingMenu.LEFT);
         //设置滑动模式
         sm.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
         //设置占据主页宽度
