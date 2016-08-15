@@ -62,10 +62,10 @@ public class MainFragment extends BaseFragment {
         basePagers.add(new SmartServicePager(mContext));
         basePagers.add(new GovaffairPager(mContext));
         basePagers.add(new SettingPager(mContext));
-        //设置默认选中的页面
-        rg_main.check(R.id.rb_main_home);
+
         //设置适配器
         vp_main.setAdapter(new BasePagerAdapter());
+
 
         //设置radioGroup的监听
         rg_main.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -95,6 +95,11 @@ public class MainFragment extends BaseFragment {
                 }
             }
         });
+
+        //设置默认选中的页面
+        rg_main.check(R.id.rb_main_home);
+        basePagers.get(0).initData();
+
         //监听那个页面初始化
         vp_main.addOnPageChangeListener(new MyOnPageChangeListener());
 

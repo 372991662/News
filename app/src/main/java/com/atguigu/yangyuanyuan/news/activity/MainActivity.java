@@ -15,6 +15,7 @@ public class MainActivity extends SlidingFragmentActivity {
 
     public static final String MAIN_TAG = "main_tag";
     public static final String LEFT_TAG = "left_tag";
+    private Object leftmenuFragment;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,5 +45,10 @@ public class MainActivity extends SlidingFragmentActivity {
         transaction.replace(R.id.fl_left, new LeftmenuFragment(), LEFT_TAG);
         transaction.commit();
 
+    }
+
+    public LeftmenuFragment getLeftmenuFragment() {
+        FragmentManager manager = getSupportFragmentManager();
+        return (LeftmenuFragment) manager.findFragmentByTag(LEFT_TAG);
     }
 }

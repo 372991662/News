@@ -1,27 +1,49 @@
 package com.atguigu.yangyuanyuan.news.fragment;
 
 import android.graphics.Color;
+import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.ListView;
 
+import com.atguigu.yangyuanyuan.news.adapter.LeftListViewAdapter;
 import com.atguigu.yangyuanyuan.news.base.BaseFragment;
+import com.atguigu.yangyuanyuan.news.domain.NewsCenterPagerBean;
+import com.atguigu.yangyuanyuan.news.utils.DensityUtil;
+
+import java.util.List;
 
 /**
  * Created by Administrator on 2016/8/14.
  */
 public class LeftmenuFragment extends BaseFragment {
+    private List<NewsCenterPagerBean.DataBean> mLeftMenuData;
+    private ListView listView;
 
     @Override
     public View initView() {
-        TextView text = new TextView(getActivity());
-        text.setText("左边菜单");
-        text.setTextColor(Color.WHITE);
-        text.setTextSize(60);
-        return text;
+        // 动态创建lv并初始化
+        listView = new ListView(mContext);
+        listView.setPadding(0, DensityUtil.dip2px(mContext, 50), 0, 0);
+        listView.setDividerHeight(0);//设置分割线高度为0
+        listView.setCacheColorHint(Color.TRANSPARENT);//设置默认透明
+        listView.setSelector(android.R.color.transparent);//设置按下listViewItem不变色
+
+        return listView;
     }
 
     @Override
     public void initData() {
         super.initData();
+    }
+
+    //左侧菜单设置数据
+    public void setData(List<NewsCenterPagerBean.DataBean> leftMenuData) {
+        this.mLeftMenuData = leftMenuData;
+        for (int i = 0; i < mLeftMenuData.size(); i++) {
+            Log.e("TAG", mLeftMenuData.get(i).getTitle());
+        }
+
+        //设置适配器
+        listView.setAdapter(new LeftListViewAdapter(mContext,mLeftMenuData));
     }
 }

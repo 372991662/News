@@ -4,13 +4,4 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bc_left"
-    android:orientation="vertical">
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="左侧菜单"
-        android:textColor="@android:color/holo_orange_light"
-        android:textSize="30sp" />
-</FrameLayout>
+    android:orientation="vertical"></FrameLayout>
