@@ -62,6 +62,29 @@ public class MainFragment extends BaseFragment {
         //设置适配器
         vp_main.setAdapter(new BasePagerAdapter());
 
+        //设置radioGroup的监听
+        rg_main.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId) {
+                    case R.id.rb_main_home:
+                        vp_main.setCurrentItem(0);
+                        break;
+                    case R.id.rb_main_news:
+                        vp_main.setCurrentItem(1);
+                        break;
+                    case R.id.rb_main_smart:
+                        vp_main.setCurrentItem(2);
+                        break;
+                    case R.id.rb_main_goverment:
+                        vp_main.setCurrentItem(3);
+                        break;
+                    case R.id.rb_main_setting:
+                        vp_main.setCurrentItem(4);
+                        break;
+                }
+            }
+        });
     }
 
     class BasePagerAdapter extends PagerAdapter {
@@ -79,11 +102,9 @@ public class MainFragment extends BaseFragment {
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
             BaseViewPager viewPager = basePagers.get(position);
-
-            viewPager.initData();
-            //--------------------------
-            initData();
             View rootView = viewPager.rootView;
+            //--------------------------
+            viewPager.initData();
             container.addView(rootView);
             return rootView;
         }
