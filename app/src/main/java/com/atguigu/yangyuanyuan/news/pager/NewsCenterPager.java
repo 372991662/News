@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.TextView;
 
 import com.atguigu.yangyuanyuan.news.activity.MainActivity;
@@ -12,6 +13,7 @@ import com.atguigu.yangyuanyuan.news.domain.NewsCenterPagerBean;
 import com.atguigu.yangyuanyuan.news.fragment.LeftmenuFragment;
 import com.atguigu.yangyuanyuan.news.utils.Constants;
 import com.google.gson.Gson;
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
@@ -34,6 +36,7 @@ public class NewsCenterPager extends BaseViewPager {
     @Override
     public void initData() {
         super.initData();
+        ib_basepager_btn.setVisibility(View.VISIBLE);
 
         tv_basepager_title.setText("新闻页面");
         TextView tv = new TextView(mContext);
@@ -42,11 +45,24 @@ public class NewsCenterPager extends BaseViewPager {
         tv.setTextColor(Color.RED);
         tv.setTextSize(25);
 
+        initListener();
+
         //添加字数图
         fl_basepager.addView(tv);
 
         //联网请求数据
         getDataFromNet();
+    }
+
+    private void initListener() {
+        ib_basepager_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity mainActivity = (MainActivity) mContext;
+                SlidingMenu slidingMenu = mainActivity.getSlidingMenu();
+                slidingMenu.toggle();
+            }
+        });
     }
 
     //使用Xutils联网请求数据

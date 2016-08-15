@@ -18,10 +18,16 @@ import java.util.List;
 public class LeftListViewAdapter extends BaseAdapter {
     private List<NewsCenterPagerBean.DataBean> mLeftMenuData;
     private Context mContext;
+    private int mLastPosition;
 
     public LeftListViewAdapter(Context context, List<NewsCenterPagerBean.DataBean> leftMenuData) {
         this.mContext = context;
         this.mLeftMenuData = leftMenuData;
+
+    }
+
+    public void setmLastPosition(int mLastPosition) {
+        this.mLastPosition = mLastPosition;
     }
 
     @Override
@@ -44,6 +50,12 @@ public class LeftListViewAdapter extends BaseAdapter {
         TextView textView = (TextView) View.inflate(mContext, R.layout.left_menu_item, null);
         //设置内容
         textView.setText(mLeftMenuData.get(position).getTitle());
+        if (position == mLastPosition) {
+            textView.setEnabled(true);
+        } else {
+            textView.setEnabled(false);
+        }
+
         return textView;
     }
 
