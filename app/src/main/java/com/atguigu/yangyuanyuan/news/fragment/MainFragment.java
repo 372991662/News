@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.RadioGroup;
 
 import com.atguigu.yangyuanyuan.news.R;
+import com.atguigu.yangyuanyuan.news.activity.MainActivity;
 import com.atguigu.yangyuanyuan.news.base.BaseFragment;
 import com.atguigu.yangyuanyuan.news.base.BaseViewPager;
 import com.atguigu.yangyuanyuan.news.pager.GovaffairPager;
@@ -15,6 +16,7 @@ import com.atguigu.yangyuanyuan.news.pager.NewsCenterPager;
 import com.atguigu.yangyuanyuan.news.pager.SettingPager;
 import com.atguigu.yangyuanyuan.news.pager.SmartServicePager;
 import com.atguigu.yangyuanyuan.news.view.NoScrollViewPager;
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
@@ -72,18 +74,23 @@ public class MainFragment extends BaseFragment {
                 switch (checkedId) {
                     case R.id.rb_main_home:
                         vp_main.setCurrentItem(0, false);
+                        isScrollSildingMenu(false);
                         break;
                     case R.id.rb_main_news:
                         vp_main.setCurrentItem(1, false);
+                        isScrollSildingMenu(true);
                         break;
                     case R.id.rb_main_smart:
                         vp_main.setCurrentItem(2, false);
+                        isScrollSildingMenu(false);
                         break;
                     case R.id.rb_main_goverment:
                         vp_main.setCurrentItem(3, false);
+                        isScrollSildingMenu(false);
                         break;
                     case R.id.rb_main_setting:
                         vp_main.setCurrentItem(4, false);
+                        isScrollSildingMenu(false);
                         break;
                 }
             }
@@ -91,6 +98,16 @@ public class MainFragment extends BaseFragment {
         //监听那个页面初始化
         vp_main.addOnPageChangeListener(new MyOnPageChangeListener());
 
+    }
+
+    private void isScrollSildingMenu(boolean b) {
+        MainActivity mainActivity = (MainActivity) mContext;
+        SlidingMenu slidingMenu = mainActivity.getSlidingMenu();
+        if (b) {
+            slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+        } else {
+            slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
+        }
     }
 
     class MyOnPageChangeListener implements ViewPager.OnPageChangeListener {
