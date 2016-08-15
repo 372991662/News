@@ -14,6 +14,7 @@ import com.atguigu.yangyuanyuan.news.pager.HomePager;
 import com.atguigu.yangyuanyuan.news.pager.NewsCenterPager;
 import com.atguigu.yangyuanyuan.news.pager.SettingPager;
 import com.atguigu.yangyuanyuan.news.pager.SmartServicePager;
+import com.atguigu.yangyuanyuan.news.view.NoScrollViewPager;
 
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
@@ -28,12 +29,14 @@ import java.util.List;
 public class MainFragment extends BaseFragment {
 
     @ViewInject(R.id.vp_main)
-    private ViewPager vp_main;
+    private NoScrollViewPager vp_main;
 
     @ViewInject(R.id.rg_main)
     private RadioGroup rg_main;
 
     private List<BaseViewPager> basePagers;
+
+    private BaseViewPager viewPager;
 
     @Override
     public View initView() {
@@ -68,23 +71,44 @@ public class MainFragment extends BaseFragment {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId) {
                     case R.id.rb_main_home:
-                        vp_main.setCurrentItem(0);
+                        vp_main.setCurrentItem(0, false);
                         break;
                     case R.id.rb_main_news:
-                        vp_main.setCurrentItem(1);
+                        vp_main.setCurrentItem(1, false);
                         break;
                     case R.id.rb_main_smart:
-                        vp_main.setCurrentItem(2);
+                        vp_main.setCurrentItem(2, false);
                         break;
                     case R.id.rb_main_goverment:
-                        vp_main.setCurrentItem(3);
+                        vp_main.setCurrentItem(3, false);
                         break;
                     case R.id.rb_main_setting:
-                        vp_main.setCurrentItem(4);
+                        vp_main.setCurrentItem(4, false);
                         break;
                 }
             }
         });
+        //监听那个页面初始化
+        vp_main.addOnPageChangeListener(new MyOnPageChangeListener());
+
+    }
+
+    class MyOnPageChangeListener implements ViewPager.OnPageChangeListener {
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+        }
+
+        @Override
+        public void onPageSelected(int position) {
+            //初始化数据
+            basePagers.get(position).initData();
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int state) {
+
+        }
     }
 
     class BasePagerAdapter extends PagerAdapter {
@@ -104,7 +128,6 @@ public class MainFragment extends BaseFragment {
             BaseViewPager viewPager = basePagers.get(position);
             View rootView = viewPager.rootView;
             //--------------------------
-            viewPager.initData();
             container.addView(rootView);
             return rootView;
         }
