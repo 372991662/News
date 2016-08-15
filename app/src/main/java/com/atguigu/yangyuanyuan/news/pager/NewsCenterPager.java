@@ -7,7 +7,9 @@ import android.view.Gravity;
 import android.widget.TextView;
 
 import com.atguigu.yangyuanyuan.news.base.BaseViewPager;
+import com.atguigu.yangyuanyuan.news.domain.NewsCenterPagerBean;
 import com.atguigu.yangyuanyuan.news.utils.Constants;
+import com.google.gson.Gson;
 
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
@@ -50,7 +52,8 @@ public class NewsCenterPager extends BaseViewPager {
             @Override
             public void onSuccess(String result) {
                 Log.e("TAG", "请求成功");
-
+                //解析数据
+                processData(result);
                 //设置ListView适配器
 
             }
@@ -70,5 +73,20 @@ public class NewsCenterPager extends BaseViewPager {
                 Log.e("TAG", "请求结束");
             }
         });
+    }
+
+    //解析json数据,显示
+    private void processData(String json) {
+        NewsCenterPagerBean bean = parsedJson(json);
+        String title = bean.getData().get(0).getChildren().get(1).getTitle();
+        Log.e("TAG", title);
+
+    }
+
+    //解析json数据
+    private NewsCenterPagerBean parsedJson(String json) {
+        Gson gson = new Gson();
+        NewsCenterPagerBean bean = gson.fromJson(json, NewsCenterPagerBean.class);
+        return bean;
     }
 }
