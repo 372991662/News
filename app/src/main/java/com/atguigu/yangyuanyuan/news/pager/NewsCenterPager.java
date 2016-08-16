@@ -35,7 +35,7 @@ import java.util.List;
 public class NewsCenterPager extends BaseViewPager {
 
 
-    private List<NewsCenterPagerBean.DataBean> leftMenuData;
+    private List<NewsCenterPagerBean.DataBean> menuData;
     private List<MenuDetailBasePager> detialBasePagers;
 
     public NewsCenterPager(Context context) {
@@ -121,19 +121,20 @@ public class NewsCenterPager extends BaseViewPager {
         Log.e("TAG", title);
 
         //给左侧菜单传递数据
-        leftMenuData = bean.getData();
+        menuData = bean.getData();
         MainActivity mainActivity = (MainActivity) mContext;
         LeftmenuFragment leftmenuFragment = (LeftmenuFragment) mainActivity.getLeftmenuFragment();
 
         //---------添加详情页面
         detialBasePagers = new ArrayList<>();
-        detialBasePagers.add(new NewsDetailsPager(mContext));
+        //通过构造将第0条数据传过去
+        detialBasePagers.add(new NewsDetailsPager(mContext, menuData.get(0)));
         detialBasePagers.add(new TopicPager(mContext));
         detialBasePagers.add(new PhotosPager(mContext));
         detialBasePagers.add(new InteractPager(mContext));
 
         //传递数据给左侧菜单
-        leftmenuFragment.setData(leftMenuData);
+        leftmenuFragment.setData(menuData);
 
     }
 
@@ -147,7 +148,7 @@ public class NewsCenterPager extends BaseViewPager {
     //根据位置切换页面
     public void switchPager(int position) {
         //改变标题
-        tv_basepager_title.setText(leftMenuData.get(position).getTitle());
+        tv_basepager_title.setText(menuData.get(position).getTitle());
         //移除内容
         fl_basepager.removeAllViews();
         //添加新内容
