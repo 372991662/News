@@ -6,6 +6,7 @@ import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import com.atguigu.yangyuanyuan.news.R;
 import com.atguigu.yangyuanyuan.news.base.MenuDetailBasePager;
@@ -26,6 +27,7 @@ public class NewsDetailsPager extends MenuDetailBasePager {
     private List<NewsCenterPagerBean.DataBean.ChildrenBean> newsDataChildren = new ArrayList<>();
     //页签页面的集合
     private List<TabDetailPager> tabDetailPagers = new ArrayList<>();
+    private ImageButton ib_tabnext;
 
     public NewsDetailsPager(Context context, NewsCenterPagerBean.DataBean newsData) {
         super(context);
@@ -36,7 +38,17 @@ public class NewsDetailsPager extends MenuDetailBasePager {
     public View initView() {
         View view = View.inflate(mContext, R.layout.newsmenu_detail_pager, null);
         vp_newsmenu_detail = (ViewPager) view.findViewById(R.id.vp_newsmenu_detail);
-        tpi_newsmenu_datail_pager = (TabPageIndicator) view.findViewById(R.id.tpi_newsmenu_datail_pager);
+        tpi_newsmenu_datail_pager = (TabPageIndicator) view.findViewById(R.id
+                .tpi_newsmenu_datail_pager);
+        ib_tabnext = (ImageButton) view.findViewById(R.id.ib_tabnext);
+
+        //设置ImageView的点击事件
+        ib_tabnext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                vp_newsmenu_detail.setCurrentItem(vp_newsmenu_detail.getCurrentItem() + 1);
+            }
+        });
         return view;
     }
 
@@ -60,6 +72,7 @@ public class NewsDetailsPager extends MenuDetailBasePager {
         tpi_newsmenu_datail_pager.setViewPager(vp_newsmenu_detail);
         //监听页面变化需要用TabPagerIndicator
     }
+
 
     //viewPager的适配器
     class NewsMenuDetailAdapter extends PagerAdapter {
