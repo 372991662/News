@@ -1,10 +1,13 @@
 package com.atguigu.yangyuanyuan.news.menudatailspager.tabdetailpager;
 
 import android.content.Context;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -21,6 +24,8 @@ import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
+import java.util.List;
+
 /**
  * Created by 杨媛媛 on 2016/8/16 19:20.
  */
@@ -35,6 +40,8 @@ public class TabDetailPager extends MenuDetailBasePager {
     private NewsCenterPagerBean.DataBean.ChildrenBean mChilderBean = new NewsCenterPagerBean
             .DataBean.ChildrenBean();
     private String url;
+    //顶部新闻数据
+    private List<TableDetailPagerBean.DataBean.TopnewsBean> topnews;
 
     public TabDetailPager(Context context, NewsCenterPagerBean.DataBean.ChildrenBean childrenBean) {
         super(context);
@@ -102,10 +109,42 @@ public class TabDetailPager extends MenuDetailBasePager {
     //解析数据
     private void processData(String saveJson) {
         TableDetailPagerBean tableDetailPagerBean = parsedJson(saveJson);
-        String title = tableDetailPagerBean.getData().getNews().get(0).getTitle();
+        //获取顶部轮播图数据集合
+        topnews = tableDetailPagerBean.getData()
+                .getTopnews();
+        //设置ViewPager数据
+        vp_newsdetails.setAdapter(new NewsTopViewPagerAdapter());
     }
 
     private TableDetailPagerBean parsedJson(String saveJson) {
         return new Gson().fromJson(saveJson, TableDetailPagerBean.class);
+    }
+
+    class NewsTopViewPagerAdapter extends PagerAdapter {
+
+        @Override
+        public int getCount() {
+            return topnews == null ? 0 : topnews.size();
+        }
+
+        @Override
+        public boolean isViewFromObject(View view, Object object) {
+            return view == object;
+        }
+
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+            ImageView iv = new ImageView(mContext);
+            iv.setBackgroundResource(R.drawable.home_scroll_default);
+            container.addView(iv);
+            //联网请求图片
+            x.image().bind(iv, Constants.BASE_URL + topnews.get(position).getTopimage());
+            return iv;
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            container.removeView((View) object);
+        }
     }
 }
