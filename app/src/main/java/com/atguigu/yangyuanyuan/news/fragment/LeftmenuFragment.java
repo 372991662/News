@@ -24,6 +24,8 @@ public class LeftmenuFragment extends BaseFragment {
     private int lastPosition;
     private LeftListViewAdapter adapter;
 
+
+    //初始化视图
     @Override
     public View initView() {
         // 动态创建lv并初始化
@@ -33,8 +35,15 @@ public class LeftmenuFragment extends BaseFragment {
         listView.setCacheColorHint(Color.TRANSPARENT);//设置默认透明
         listView.setSelector(android.R.color.transparent);//设置按下listViewItem不变色
 
+        //初始化监听
         initListener();
         return listView;
+    }
+
+    //初始化数据
+    @Override
+    public void initData() {
+        super.initData();
     }
 
     //设置菜单item条目监听
@@ -66,22 +75,19 @@ public class LeftmenuFragment extends BaseFragment {
         newsCenterPager.switchPager(position);
     }
 
-    @Override
-    public void initData() {
-        super.initData();
-    }
 
     //左侧菜单设置数据
     public void setData(List<NewsCenterPagerBean.DataBean> leftMenuData) {
         this.mLeftMenuData = leftMenuData;
         for (int i = 0; i < mLeftMenuData.size(); i++) {
+            //---
             Log.e("TAG", mLeftMenuData.get(i).getTitle());
         }
         adapter = new LeftListViewAdapter(mContext, mLeftMenuData);
         //设置适配器
         listView.setAdapter(adapter);
 
-        //设置默认页面
+        //设置默认页面为起始页面
         switchPager(0);
     }
 }

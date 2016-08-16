@@ -2,6 +2,7 @@ package com.atguigu.yangyuanyuan.news.pager;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -16,6 +17,7 @@ import com.atguigu.yangyuanyuan.news.menudatailspager.InteractPager;
 import com.atguigu.yangyuanyuan.news.menudatailspager.NewsDetailsPager;
 import com.atguigu.yangyuanyuan.news.menudatailspager.PhotosPager;
 import com.atguigu.yangyuanyuan.news.menudatailspager.TopicPager;
+import com.atguigu.yangyuanyuan.news.utils.CacheUtils;
 import com.atguigu.yangyuanyuan.news.utils.Constants;
 import com.google.gson.Gson;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
@@ -57,6 +59,14 @@ public class NewsCenterPager extends BaseViewPager {
         //添加子视图
         fl_basepager.addView(tv);
 
+        //获取缓存数据
+        String saveJson = CacheUtils.getString(mContext, Constants.NEWS_CENTER_PAGER_URL);
+        //非空验证
+        if (!TextUtils.isEmpty(saveJson)) {
+            //从内存中解析数据
+            processData(saveJson);
+        }
+
         //联网请求数据
         getDataFromNet();
     }
@@ -79,8 +89,10 @@ public class NewsCenterPager extends BaseViewPager {
             @Override
             public void onSuccess(String result) {
                 Log.e("TAG", "请求成功");
-                //解析数据
+                //从网络中解析数据
                 processData(result);
+                //缓存数据  key->value
+                CacheUtils.putString(mContext, Constants.NEWS_CENTER_PAGER_URL, result);
                 //设置ListView适配器
 
             }

@@ -30,6 +30,7 @@ import java.util.List;
  */
 public class MainFragment extends BaseFragment {
 
+    //xUtils初始控件
     @ViewInject(R.id.vp_main)
     private NoScrollViewPager vp_main;
 
@@ -100,11 +101,12 @@ public class MainFragment extends BaseFragment {
         rg_main.check(R.id.rb_main_home);
         basePagers.get(0).initData();
 
-        //监听那个页面初始化
+        //监听页面改变并初始化数据
         vp_main.addOnPageChangeListener(new MyOnPageChangeListener());
 
     }
 
+    //左侧菜单是否可以滚动
     private void isScrollSildingMenu(boolean b) {
         MainActivity mainActivity = (MainActivity) mContext;
         SlidingMenu slidingMenu = mainActivity.getSlidingMenu();
@@ -115,10 +117,13 @@ public class MainFragment extends BaseFragment {
         }
     }
 
+    //得到新闻中心的方法
     public NewsCenterPager getNewsCenterPager() {
         return (NewsCenterPager) basePagers.get(1);
     }
 
+    //##############################
+    //页面改变监听
     class MyOnPageChangeListener implements ViewPager.OnPageChangeListener {
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -137,6 +142,7 @@ public class MainFragment extends BaseFragment {
         }
     }
 
+    //适配器
     class BasePagerAdapter extends PagerAdapter {
 
         @Override
