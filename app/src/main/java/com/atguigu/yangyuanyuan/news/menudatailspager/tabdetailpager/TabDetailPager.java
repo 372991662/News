@@ -18,6 +18,7 @@ import com.atguigu.yangyuanyuan.news.domain.NewsCenterPagerBean;
 import com.atguigu.yangyuanyuan.news.domain.TableDetailPagerBean;
 import com.atguigu.yangyuanyuan.news.utils.CacheUtils;
 import com.atguigu.yangyuanyuan.news.utils.Constants;
+import com.atguigu.yangyuanyuan.news.utils.DensityUtil;
 import com.google.gson.Gson;
 
 import org.xutils.common.Callback;
@@ -36,7 +37,7 @@ public class TabDetailPager extends MenuDetailBasePager {
     private TextView tv_title;
     private LinearLayout ll_newsdetails;
     private ListView lv_newsdetails;
-
+    private int lastPosition;
     private NewsCenterPagerBean.DataBean.ChildrenBean mChilderBean = new NewsCenterPagerBean
             .DataBean.ChildrenBean();
     private String url;
@@ -114,6 +115,74 @@ public class TabDetailPager extends MenuDetailBasePager {
                 .getTopnews();
         //设置ViewPager数据
         vp_newsdetails.setAdapter(new NewsTopViewPagerAdapter());
+        //添加小红点
+        addPoint();
+        //设置小红点移动和文本变化
+        setPointData();
+
+    }
+
+    private void setPointData() {
+        //监听页面变化
+        vp_newsdetails.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int
+                    positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                //设置文本
+                tv_title.setText(topnews.get(position).getTitle());
+                //红点高亮
+                //从线性布局取红点
+                ImageView lastIv = (ImageView) ll_newsdetails.getChildAt(lastPosition);
+                lastIv.setEnabled(false);
+
+                ImageView iv = (ImageView) ll_newsdetails.getChildAt(position);
+                iv.setEnabled(true);
+
+
+                lastPosition = position;
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+        //默认显示第一条顶部新闻
+        tv_title.setText(topnews.get(0).getTitle());
+    }
+
+    //添加小红点放发
+    private void addPoint() {
+        //-------必须移除小红点先
+        ll_newsdetails.removeAllViews();
+        //添加小点
+        for (int i = 0; i < topnews.size(); i++) {
+            ImageView iv = new ImageView(mContext);
+            iv.setImageResource(R.drawable.point_selector);
+
+            //设置点和点之间间距
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(DensityUtil.dip2px
+                    (mContext, 8), DensityUtil.dip2px(mContext, 8));
+            params.rightMargin = 8;
+            iv.setLayoutParams(params);
+
+            //默认选中首个红点
+            if (i == 0) {
+                iv.setEnabled(true);
+            } else {
+                iv.setEnabled(false);
+            }
+
+
+            ll_newsdetails.addView(iv);
+        }
     }
 
     private TableDetailPagerBean parsedJson(String saveJson) {
