@@ -11,6 +11,7 @@ import com.atguigu.yangyuanyuan.news.R;
 import com.atguigu.yangyuanyuan.news.base.MenuDetailBasePager;
 import com.atguigu.yangyuanyuan.news.domain.NewsCenterPagerBean;
 import com.atguigu.yangyuanyuan.news.menudatailspager.tabdetailpager.TabDetailPager;
+import com.viewpagerindicator.TabPageIndicator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +21,7 @@ import java.util.List;
  */
 public class NewsDetailsPager extends MenuDetailBasePager {
     private ViewPager vp_newsmenu_detail;
+    private TabPageIndicator tpi_newsmenu_datail_pager;
     //页签页面的数据
     private List<NewsCenterPagerBean.DataBean.ChildrenBean> newsDataChildren = new ArrayList<>();
     //页签页面的集合
@@ -34,6 +36,7 @@ public class NewsDetailsPager extends MenuDetailBasePager {
     public View initView() {
         View view = View.inflate(mContext, R.layout.newsmenu_detail_pager, null);
         vp_newsmenu_detail = (ViewPager) view.findViewById(R.id.vp_newsmenu_detail);
+        tpi_newsmenu_datail_pager = (TabPageIndicator) view.findViewById(R.id.tpi_newsmenu_datail_pager);
         return view;
     }
 
@@ -53,10 +56,19 @@ public class NewsDetailsPager extends MenuDetailBasePager {
 
         //设置适配器
         vp_newsmenu_detail.setAdapter(new NewsMenuDetailAdapter());
+        //关联ViewPager和TabPagerIndicator
+        tpi_newsmenu_datail_pager.setViewPager(vp_newsmenu_detail);
+        //监听页面变化需要用TabPagerIndicator
     }
 
     //viewPager的适配器
     class NewsMenuDetailAdapter extends PagerAdapter {
+
+        //设置TabPagerIndicator标题,必须重写此方法
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return newsDataChildren.get(position).getTitle();
+        }
 
         @Override
         public int getCount() {

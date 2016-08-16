@@ -3,6 +3,7 @@ package com.atguigu.yangyuanyuan.news.activity;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.Window;
 import android.view.WindowManager;
 
 import com.atguigu.yangyuanyuan.news.R;
@@ -21,6 +22,8 @@ public class MainActivity extends SlidingFragmentActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //隐藏标题
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         //设置主页面
         setContentView(R.layout.activity_main);
         //设置左侧菜单
