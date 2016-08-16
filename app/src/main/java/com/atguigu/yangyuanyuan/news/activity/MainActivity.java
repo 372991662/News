@@ -3,6 +3,7 @@ package com.atguigu.yangyuanyuan.news.activity;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.WindowManager;
 
 import com.atguigu.yangyuanyuan.news.R;
 import com.atguigu.yangyuanyuan.news.fragment.LeftmenuFragment;
@@ -35,6 +36,8 @@ public class MainActivity extends SlidingFragmentActivity {
         sm.setBehindOffset(DensityUtil.dip2px(this, 200));
 
         initFragment();
+        //-----------------------------设置虚拟按键
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
     }
 
     //初始化Fragment
@@ -50,5 +53,10 @@ public class MainActivity extends SlidingFragmentActivity {
     public LeftmenuFragment getLeftmenuFragment() {
         FragmentManager manager = getSupportFragmentManager();
         return (LeftmenuFragment) manager.findFragmentByTag(LEFT_TAG);
+    }
+
+    public MainFragment getMainFragment() {
+        FragmentManager manager = getSupportFragmentManager();
+        return (MainFragment) manager.findFragmentByTag(MAIN_TAG);
     }
 }

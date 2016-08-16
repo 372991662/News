@@ -10,6 +10,7 @@ import com.atguigu.yangyuanyuan.news.activity.MainActivity;
 import com.atguigu.yangyuanyuan.news.adapter.LeftListViewAdapter;
 import com.atguigu.yangyuanyuan.news.base.BaseFragment;
 import com.atguigu.yangyuanyuan.news.domain.NewsCenterPagerBean;
+import com.atguigu.yangyuanyuan.news.pager.NewsCenterPager;
 import com.atguigu.yangyuanyuan.news.utils.DensityUtil;
 
 import java.util.List;
@@ -42,15 +43,27 @@ public class LeftmenuFragment extends BaseFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //记录点击位置，点击变红色
+                lastPosition = position;
                 adapter.setmLastPosition(position);
                 adapter.notifyDataSetChanged();
 
                 //关闭左侧菜单
                 MainActivity mainActivity = (MainActivity) mContext;
                 mainActivity.getSlidingMenu().toggle();
+
                 //切换到详情页面
+                switchPager(lastPosition);
+
             }
         });
+    }
+
+    //根据位置切换详情页面
+    private void switchPager(int position) {
+        MainActivity mainActivity = (MainActivity) mContext;
+        MainFragment mainFragment = mainActivity.getMainFragment();
+        NewsCenterPager newsCenterPager = mainFragment.getNewsCenterPager();
+        newsCenterPager.switchPager(position);
     }
 
     @Override
@@ -67,5 +80,8 @@ public class LeftmenuFragment extends BaseFragment {
         adapter = new LeftListViewAdapter(mContext, mLeftMenuData);
         //设置适配器
         listView.setAdapter(adapter);
+
+        //设置默认页面
+        switchPager(0);
     }
 }
