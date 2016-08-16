@@ -76,7 +76,6 @@ public class NewsCenterPager extends BaseViewPager {
     private void getDataFromNet() {
         RequestParams params = new RequestParams(Constants.NEWS_CENTER_PAGER_URL);
         x.http().get(params, new Callback.CommonCallback<String>() {
-
             @Override
             public void onSuccess(String result) {
                 Log.e("TAG", "请求成功");
@@ -123,8 +122,6 @@ public class NewsCenterPager extends BaseViewPager {
 
         //传递数据给左侧菜单
         leftmenuFragment.setData(leftMenuData);
-
-
 
     }
 

@@ -152,6 +152,7 @@ public class MainFragment extends BaseFragment {
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
             BaseViewPager viewPager = basePagers.get(position);
+
             View rootView = viewPager.rootView;
             //--------------------------
             container.addView(rootView);
