@@ -9,9 +9,11 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 
 import com.atguigu.yangyuanyuan.news.R;
+import com.atguigu.yangyuanyuan.news.activity.MainActivity;
 import com.atguigu.yangyuanyuan.news.base.MenuDetailBasePager;
 import com.atguigu.yangyuanyuan.news.domain.NewsCenterPagerBean;
 import com.atguigu.yangyuanyuan.news.menudatailspager.tabdetailpager.TabDetailPager;
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.viewpagerindicator.TabPageIndicator;
 
 import java.util.ArrayList;
@@ -71,8 +73,39 @@ public class NewsDetailsPager extends MenuDetailBasePager {
         //关联ViewPager和TabPagerIndicator
         tpi_newsmenu_datail_pager.setViewPager(vp_newsmenu_detail);
         //监听页面变化需要用TabPagerIndicator
+        tpi_newsmenu_datail_pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int
+                    positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if (position == 0) {
+                    isScrollSildingMenu(true);
+                } else {
+                    isScrollSildingMenu(false);
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
+    //左侧菜单是否可以滑动
+    private void isScrollSildingMenu(boolean b) {
+        MainActivity mainActivity = (MainActivity) mContext;
+        SlidingMenu slidingMenu = mainActivity.getSlidingMenu();
+        if (b) {
+            slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+        } else {
+            slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
+        }
+    }
 
     //viewPager的适配器
     class NewsMenuDetailAdapter extends PagerAdapter {
