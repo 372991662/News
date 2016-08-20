@@ -39,6 +39,7 @@ public class NewsDetailsPager extends MenuDetailBasePager {
     @Override
     public View initView() {
         View view = View.inflate(mContext, R.layout.newsmenu_detail_pager, null);
+
         vp_newsmenu_detail = (ViewPager) view.findViewById(R.id.vp_newsmenu_detail);
         tpi_newsmenu_datail_pager = (TabPageIndicator) view.findViewById(R.id
                 .tpi_newsmenu_datail_pager);
@@ -70,6 +71,8 @@ public class NewsDetailsPager extends MenuDetailBasePager {
 
         //设置适配器
         vp_newsmenu_detail.setAdapter(new NewsMenuDetailAdapter());
+
+
         //关联ViewPager和TabPagerIndicator
         tpi_newsmenu_datail_pager.setViewPager(vp_newsmenu_detail);
         //监听页面变化需要用TabPagerIndicator

@@ -122,8 +122,7 @@ public class TabDetailPager extends MenuDetailBasePager {
         //jason解析的数据
         TableDetailPagerBean tableDetailPagerBean = parsedJson(saveJson);
         //获取顶部轮播图数据集合
-        topnews = tableDetailPagerBean.getData()
-                .getTopnews();
+        topnews = tableDetailPagerBean.getData().getTopnews();
         //设置ViewPager数据
         vp_newsdetails.setAdapter(new NewsTopViewPagerAdapter());
         //添加小红点
@@ -194,7 +193,6 @@ public class TabDetailPager extends MenuDetailBasePager {
             } else {
                 iv.setEnabled(false);
             }
-
 
             ll_newsdetails.addView(iv);
         }
